@@ -1,7 +1,7 @@
 {
   "header": ["Дерево Отрезков.", "Построение."],
   "date": "14 Сентября 2020",
-  "authors": ["evgenstf"],
+  "authors": ["Монтгомери Преображенский"],
   "id": "segment_tree",
-  "reading_time": "5 минут"
+  "reading_time": "1 час 15 минут"
 }
