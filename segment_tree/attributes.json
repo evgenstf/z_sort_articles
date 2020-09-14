@@ -1,6 +1,7 @@
 {
-  "header": "Дерево Отрезков",
-  "date": "20200101 15:30",
+  "header": ["Дерево Отрезков.", "Построение."],
+  "date": "14 Сентября 2020",
   "authors": ["evgenstf"],
-  "id": "segment_tree"
+  "id": "segment_tree",
+  "reading_time": "5 минут"
 }
