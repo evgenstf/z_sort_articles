@@ -1,0 +1,9 @@
+{
+  "type": "category",
+  "id": "ml",
+  "header": ["Машинное обучение"],
+  "color": "#40CD89",
+  "items": [
+    "sample_1"
+  ]
+}

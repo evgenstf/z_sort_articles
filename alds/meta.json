@@ -1,0 +1,12 @@
+{
+  "id": "alds",
+  "header": ["Алгоритмы и структуры данных"],
+  "type": "category",
+  "color": "#B75E42",
+  "items": [
+    "boolean_function",
+    "huffman_algorithm",
+    "segment_tree",
+    "simetrical_relationship"
+  ]
+}
