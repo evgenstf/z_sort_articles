@@ -1,0 +1,9 @@
+{
+  "id": "linal",
+  "header": ["Линейная алгебра и геометрия"],
+  "type": "category",
+  "color": "#B75E42",
+  "items": [
+    "matrixes_introduction"
+  ]
+}
