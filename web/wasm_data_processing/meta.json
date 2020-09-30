@@ -1,0 +1,8 @@
+{
+  "type": "article",
+  "header": ["Обрабатываем данные на стороне клиента с помощью WASM."],
+  "date": "10 Октября 2020",
+  "authors": ["Евгений Казаков"],
+  "id": "wasm_data_processing",
+  "reading_time": "12 минут"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "web",
+  "header": ["Веб-разработка"],
+  "type": "category",
+  "color": "#6097EB",
+  "items": [
+    "wasm_data_processing"
+  ]
+}
