@@ -1,0 +1,9 @@
+{
+  "id": "cpp",
+  "header": ["Язык программирования C++"],
+  "type": "category",
+  "color": "#000000",
+  "items": [
+    "cpp_linking"
+  ]
+}
