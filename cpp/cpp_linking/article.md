@@ -58,5 +58,5 @@ int main() {
 ![](https://habrastorage.org/webt/dv/h9/d7/dvh9d7fqralg6ep3qmmf9nzvkui.png)
 
 Наконец, мы можем <!собрать!>(Какой командой?){g++ main.cpp average.o} его вместе с основным main-ом в исполняемый файл.
-
+<p style='text-align: right;'> *Весь представленный в статье код можно найти в [соответствующем репозитории](https://github.com/evgenstf/z_sort_sources/tree/main/cpp/cpp_linking).* </p>
 
