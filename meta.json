@@ -4,11 +4,8 @@
   "color": "white",
   "header": "",
   "items": [
-    "alds",
-    "linal",
-    "ml",
+    "demo",
     "cpp",
-    "web",
-    "rs"
+    "web"
   ]
 }

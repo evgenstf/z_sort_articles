@@ -1,0 +1,9 @@
+{
+  "id": "demo",
+  "header": ["Демонстрационные материалы"],
+  "type": "category",
+  "color": "#FF9800",
+  "items": [
+    "common_demo"
+  ]
+}
