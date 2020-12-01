@@ -1,0 +1,134 @@
+<div class="article">
+  <div class="article_header">Механизм линковки в C++</div>
+
+  <div class="article_subheader"><tr>
+    <table width=100% style="border-collapse:collapse"><tr>
+      <td style="width:100%">
+        <div class="article_parent">
+          <a style="color:#000000" href=/cpp>Язык программирования C++</a>
+        </div>
+      </td>
+      <td style="padding:0px">
+        <img src="{% static "svg/clock.svg" %}" width=16px height=16px style="margin-right:10px"/>
+      </td>
+      <td nowrap="nowrap">
+        <div class="article_reading_time">
+          5 минут
+        </div>
+      </td>
+    </tr></table>
+  </div>
+
+  <div class="article_body">
+    <p>Код на C++ можно разбивать на единицы трансляции, собирающиеся независимо, для этого существует механизм внутренних и внешних связей, называемый линковкой. Это позволяет создавать исполняемые файлы, статические и динамические библиотеки. Для удобной работы с большим количеством сущностей существуют системы сборки, например make и cmake.</p><h2>Что это такое и зачем нужно?</h2>
+<p>Рано или поздно (чаще рано) любой проект приходит в состояние, когда весь код не умещается в один файл. На это может быть сразу несколько причин: логических сущностей становится все больше, намечается явное разделение на модули, строчек кода становится слишком много. Тогда интуитивным решением будет разделить кодовую базу на несколько файлов, объединив код в них по некоторой логике.</p>
+<p>Следующим закономерным шагом будет не только формальное разделение на файлы, но и на отдельные таргеты компиляции, называемые <em>единицами трансляции</em>. Для удобства понимания можно считать, что это модули - атомарные подпроекты, содержащие свою более-менее независимую логику. После компиляции каждой такой сущности образуется бинарный артефакт, который можно <em>прилинковать</em> к остальным и получить конечный исполняемый файл или библиотеку.</p>
+<p>Такое разделение на уровне компиляции дает основное преимущество модульной архитектуры по сравнению с монолитной - теперь проект можно компилировать независимо по единицам трансляции. При изменении кода, не нужно пересобирать всю кодовую базу: достаточно пересобрать единицу трансляции, к которой он относится. Это существенно экономит время сборки при разработке всего проекта.</p><h2>Как это работает в коде?</h2>
+<p>Скомпилируем простейшую программу, не использующую сторонних библиотек.</p>
+<pre><code>int main() {
+  return 1;
+}
+</code></pre>
+
+<p>В директории появился файл <strong>a.out</strong>. Это бинарный файл в формате <a href="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format">ELF (Executable and Linkable Format)</a>.  Для его анализа существует инструмент <strong>readelf</strong> - он позволяет посмотреть все низкоуровневые сущности. Однако в рамках этой статьи нас будут интересовать только сами символы. Утилита <strong>mcview</strong> умеет удобно парсить elf и показывать их список:</p>
+<p><img alt="" src="https://habrastorage.org/webt/gf/zf/3n/gfzf3ngekobjqrcvu5h4pveyv6m.png" />Большая часть скомпилированного файла состоит из служебных символов. Нас интересует только <strong>main</strong>.</p>
+<p>Теперь попробуем добавить в программу функцию, и сразу увидим, что в elf артефакте появился новый символ с ее названием:</p>
+<pre><code>double average(int a, int b) {
+  return static_cast&lt;double&gt;(a + b) / 2.0;
+}
+
+int main() {
+  int a = 10;
+  int b = 20;
+  return static_cast&lt;int&gt;(average(a, b));
+}
+</code></pre>
+
+<p><img alt="" src="https://habrastorage.org/webt/ve/tm/vp/vetmvpbfoox4lsqypk6x9obrvmi.png" /></p><p>Далее попробуем вынести эту функцию в отдельную единицу трансляции. Для этого создадим рядом файл average.cpp с ней:</p>
+<pre><code>double average(int a, int b) {
+ return  static_cast&lt;double&gt;(a + b) / 2.0;
+}
+</code></pre>
+
+<p>А в main.cpp уберем определение функции и оставим только объявление:</p>
+<pre><code>double average(int a, int b);
+
+int main() {
+int a = 10;
+int b = 20;
+return  static_cast&lt;int&gt;(average(a, b));
+}
+</code></pre>
+
+<p>Теперь если собрать average.cpp как <span class="footnote_link" id="0" onclick='showFootnote("0")' footnote-title="Какой командой?" footnote-text="<p>g++ -c average.cpp</p>">объектный файл</span class="footnote_link" id="0" onclick='showFootnote("0")' footnote-title="Какой командой?" footnote-text="<p>g++ -c average.cpp</p>">, образуется объектный файл average.o, который содержит только этот символ:
+<img alt="" src="https://habrastorage.org/webt/dv/h9/d7/dvh9d7fqralg6ep3qmmf9nzvkui.png" /></p>
+<p>Наконец, мы можем <span class="footnote_link" id="1" onclick='showFootnote("1")' footnote-title="Какой командой?" footnote-text="<p>g++ main.cpp average.o</p>">собрать</span class="footnote_link" id="1" onclick='showFootnote("1")' footnote-title="Какой командой?" footnote-text="<p>g++ main.cpp average.o</p>"> его вместе с основным main-ом в исполняемый файл.</p>
+<h2>Статические и динамические библиотеки</h2>
+<p>Логичным развитием идеи обобщения и переиспользования кода будет распространение прекомпилированных объектных файлов для линковки их в сторонних проектах.</p>
+<p>Для этого в C++ существует концепция статических и динамических библиотек. Начнем с первых.</p>
+<p>Статические библиотеки - это все те же объектные файлы, сопровождаемые заголовочными .h файлами. Чтобы подключить такую библиотеку в коде, нужно импортировать заголовочный файл и при компиляции в качестве объектных файлов для линковщика указать объектный файл библиотеки.</p>
+<p>Динамические библиотеки отличаются от статических тем, что использующий их код собирается без них, и вся библиотечная логика вызывается на стороне клиента уже при запуске.</p><h2>CMake</h2>
+<p>Способ сборки проектных таргетов через вызов нативных команд компилятора с указанием всего списка используемых объектных файлов и исходных кодов по <span class="footnote_link" id="0" onclick='showFootnote("0")' footnote-title="Все-таки каким?" footnote-text="<p>Для каждого файла нужно следить к какому таргету он относится и от каких зависит. Даже для проекта среднего размера держать эту неявную логику зависимостей в голове невозможно.</p>">очевидным причинам</span class="footnote_link" id="0" onclick='showFootnote("0")' footnote-title="Все-таки каким?" footnote-text="<p>Для каждого файла нужно следить к какому таргету он относится и от каких зависит. Даже для проекта среднего размера держать эту неявную логику зависимостей в голове невозможно.</p>"> неудобен.</p>
+<p>Для хранения информации о зависимостях между проектными сущностями и эффективной компиляции таргетов существуют различные системы сборки. Одной из самых распространенных, удобных и простых является <strong><a href="https://cmake.org/cmake/help/latest/guide/tutorial/index.html">CMake</a></strong>.</p>
+<p>Его базовый синтаксис довольно прост и основан на механизме уже упомянутых <em>таргетов</em> - единиц компиляции: </p>
+<pre><code>cmake_minimum_required(**VERSION** 2.8) 
+project(sample_4) 
+set(CMAKE_CXX_FLAGS 
+&quot;${CMAKE_CXX_FLAGS} -std=c++11 -Wall&quot;)
+
+set(AVERAGE_SOURCE average.cpp) 
+add_library(AVERAGE average.cpp)
+
+set(MAIN_SOURCE main.cpp) 
+add_executable(MAIN main.cpp)
+
+target_link_libraries(MAIN AVERAGE) 
+</code></pre>
+
+<p>В коде выше создается два таргета: <strong>AVERAGE</strong> - библиотека, содержащая функцию вычисления среднего значения и <strong>MAIN</strong> - собственно исполняемый файл, вызывающий эту функцию.</p>
+<p>Последняя строчка обозначает зависимость <strong>MAIN</strong>  от <strong>AVERAGE</strong>.</p>
+<p>Теперь чтобы скомпилировать проект достаточно запустить следующие команды:</p>
+<pre><code class="bash">mkdir build &amp;&amp; cd build 
+cmake .. &amp;&amp; make 
+</code></pre>
+
+<p>Результат:</p>
+<pre><code class="txt">$ cmake .. &amp;&amp; make 
+-- The C compiler identification is Clang 10.0.0 
+-- The CXX compiler identification is Clang 10.0.0 
+-- Check for working C compiler: /usr/bin/clang 
+-- Check for working C compiler: /usr/bin/clang -- works 
+-- Detecting C compiler ABI info 
+-- Detecting C compiler ABI info - done 
+-- Detecting C compile features 
+-- Detecting C compile features - done 
+-- Check for working CXX compiler: /usr/bin/clang++ 
+-- Check for working CXX compiler: /usr/bin/clang++ -- works 
+-- Detecting CXX compiler ABI info 
+-- Detecting CXX compiler ABI info - done 
+-- Detecting CXX compile features 
+-- Detecting CXX compile features - done 
+-- Configuring done 
+-- Generating done 
+-- Build files have been written to: /home/evgenstf/z_sort_sources/cpp/cpp_linking/sample_4/build 
+**Scanning dependencies of target AVERAGE** 
+[ 25%] Building CXX object CMakeFiles/AVERAGE.dir/average.cpp.o 
+[ 50%] **Linking CXX static library libAVERAGE.a** 
+[ 50%] Built target AVERAGE 
+**Scanning dependencies of target MAIN** 
+[ 75%] Building CXX object CMakeFiles/MAIN.dir/main.cpp.o 
+[100%] **Linking CXX executable MAIN** 
+[100%] Built target MAIN 
+</code></pre>
+
+<p>После выполнения сборки в папке build появляются соответствующие артефакты <strong>MAIN</strong> и <strong>libAVERAGE.a</strong>. 
+ <p style='text-align: right;'> <em>Весь представленный в статье код можно найти в <a href="https://github.com/evgenstf/z_sort_sources/tree/main/cpp/cpp_linking">соответствующем репозитории</a>.</em> </p></p>
+  </div>
+
+  <div id="footnote_container"></div>
+
+  <div class="article_tail">
+    <div class="article_authors">evgenstf</div>
+    <div class="article_date">19 Октября 2020</div>
+  </div>
+</div>
