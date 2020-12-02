@@ -4,6 +4,7 @@
   "type": "category",
   "color": "#283593",
   "items": [
+    "ram_model",
     "algorithm_complexity"
   ]
 }
