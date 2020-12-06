@@ -25,7 +25,7 @@
 <p>Про архитектуру WebAssembly и общие шаги довольно подробно написано <a href="https://habr.com/ru/post/475778/">здесь</a> и <a href="https://habr.com/ru/post/475778/">тут</a>. Мы же пройдемся только по основным фактам.</p>
 <p>Работа с WebAssembly начинается с предварительной сборки артефактов, необходимых для запуска скомпилированного кода на стороне клиента. Их два: собственно сам бинарный WASM файл и JavaScript прослойка, через которую можно вызывать <span class="footnote_link" id="8" onclick='showFootnote("8")' footnote-title="А как их экспортировать?" footnote-text="<p>Методом <strong>cwrap</strong>, об этом будет дальше.</p>">экспортированные в него методы</span class="footnote_link" id="8" onclick='showFootnote("8")' footnote-title="А как их экспортировать?" footnote-text="<p>Методом <strong>cwrap</strong>, об этом будет дальше.</p>">.</p>
 <p>Пример простейшего кода на C++ для компиляции </p>
-<pre><code class="python">#include &lt;algorithm&gt;
+<pre><code class="language-python">#include &lt;algorithm&gt;
 
 extern &quot;C&quot; {
 int calculate_gcd(int a, int b) {
@@ -37,13 +37,11 @@ int calculate_gcd(int a, int b) {
 } 
 } 
 </code></pre>
-
 <p>Для сборки используется <a href="https://emscripten.org/docs/index.html">Emscripten</a>, который кроме основного интерфейса подобных компиляторов, содержит дополнительные флаги, через которые задается конфигурация виртуальной машины и экспортируемые методы. Простейший запуск выглядит примерно так: </p>
 <pre><code>em++ main.cpp --std=c++17 -o gcd.html \ 
 -s EXPORTED_FUNCTIONS='[&quot;_calculate_gcd&quot;]' \ 
 -s EXTRA_EXPORTED_RUNTIME_METHODS='[&quot;cwrap&quot;]' 
 </code></pre>
-
 <p>Указанием в качестве объекта <strong>.html</strong> файла подсказывает компилятору, что нужно создать также простую html-разметку с js консолью. Теперь если запустить сервер на полученных файлах, увидим эту консоль с возможностью запуска <strong>_calculate_gcd</strong>: 
 <img alt="" src="https://habrastorage.org/webt/f8/eu/ht/f8euhtigkftvegwdj0nycrgmumm.png" /></p>
 <h1>Обработка данных</h1>
@@ -71,7 +69,6 @@ uint32_t decompress_data(uint32_t* data, uint32_t data_size,
 
 } 
 </code></pre>
-
 <p>Как можно видеть, в нем просто объявлены <strong>внешние</strong> (используя ключевое слово <code>extern</code>) функции, внутри вызывающие соответствующие методы из библиотеки с lz4.</p>
 <p>Вообще говоря, в нашем случае этот файл бесполезен: можно сразу использовать нативный интерфейс из <strong>lz4.h</strong>. Однако в более сложных проектах (например, объединяющих функционал разных библиотек), удобно иметь такую общую точку входа с перечислением всех используемых функций.</p>
 <p>Далее компилируем код используя уже упомянутый компилятор <strong>Emscripten</strong>: </p>
@@ -80,13 +77,11 @@ uint32_t decompress_data(uint32_t* data, uint32_t data_size,
 -s EXTRA_EXPORTED_RUNTIME_METHODS='[&quot;cwrap&quot;]' \ 
 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 
 </code></pre>
-
 <p>Размер полученных артефактов настораживает: </p>
 <pre><code>$ du -hs wasm_compressor.* 
 112K    wasm_compressor.js 
 108K    wasm_compressor.wasm 
 </code></pre>
-
 <p>Если открыть JS файл-прослойку, можно увидеть примерно следующее: 
 <img alt="код wasm_compress.js" src="https://habrastorage.org/webt/cs/8r/lx/cs8rlx29cgv0jg5ipr0l9uo5qic.png" /></p>
 <p>В ней много лишнего: от комментариев до сервисных функций, большая часть которых не используется. Ситуацию можно исправить добавлением флага <code>-O2</code>, <a href="https://emscripten.org/docs/tools_reference/emcc.html#emcc-o2">в Emscripten компиляторе он включает также оптимизацию js кода.</a></p>
@@ -96,7 +91,6 @@ uint32_t decompress_data(uint32_t* data, uint32_t data_size,
 <p>Нужно как-то вызвать обработчик на стороне клиента. Первым делом загрузим файл, предоставленный пользователем, через <code>FileReader</code>, хранить сырые данные будем в примитиве <code>Uint8Array</code>: </p>
 <pre><code>var rawData = new Uint8Array(fileReader.result); 
 </code></pre>
-
 <p>Далее нужно передать загруженные данные в виртуальную машину. Для этого сначала аллоцируем нужное количество байт методом <code>_malloc</code>, затем скопируем туда JS массив методом <code>set</code>. Для удобства выделим эту логику в функцию <code>arrayToWasmPtr(array)</code>: </p>
 <pre><code>function arrayToWasmPtr(array) { 
   var ptr = Module._malloc(array.length); 
@@ -104,12 +98,10 @@ uint32_t decompress_data(uint32_t* data, uint32_t data_size,
   return ptr; 
 } 
 </code></pre>
-
 <p>После загрузки данных в память виртуальной машины, нужно каким-то образом вызвать функцию из обработки. Но как эту функцию найти? Нам поможет метод <code>cwrap</code> - первым аргументом в нем указывается название искомой функции, вторым - возвращаемый тип, третьим - список с входными аргументами.</p>
 <pre><code>compressDataFunction = Module.cwrap('compress_data', 'number', 
 ['number', 'number', 'number']); 
 </code></pre>
-
 <p>И наконец нужно вернуть готовые байты из виртуальной машины. Для этого пишем еще одну функцию, копирующую их в JS массив посредством метода <code>subarray</code> </p>
 <pre><code>function wasmPtrToArray(ptr, length) { 
   var array = new Int8Array(length); 
@@ -117,7 +109,6 @@ uint32_t decompress_data(uint32_t* data, uint32_t data_size,
   return array; 
 } 
 </code></pre>
-
 <p>Полный скрипт обработки входящих файлов лежит <a href="https://github.com/evgenstf/wasm_data_processing/blob/master/lz4_compression_sample/handle_upload.js">тут</a>. HTML-разметка, содержащая форму загрузки файла и подгрузку wasm артефактов <a href="https://github.com/evgenstf/wasm_data_processing/blob/master/lz4_compression_sample/index.html">здесь</a>.</p>
 <h2>Итог</h2>
 <p>Поиграться с прототипом можно <a href="http://195.2.78.56/">здесь</a></p>

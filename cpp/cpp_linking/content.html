@@ -29,7 +29,6 @@
   return 1;
 }
 </code></pre>
-
 <p>В директории появился файл <strong>a.out</strong>. Это бинарный файл в формате <a href="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format">ELF (Executable and Linkable Format)</a>.  Для его анализа существует инструмент <strong>readelf</strong> - он позволяет посмотреть все низкоуровневые сущности. Однако в рамках этой статьи нас будут интересовать только сами символы. Утилита <strong>mcview</strong> умеет удобно парсить elf и показывать их список:</p>
 <p><img alt="" src="https://habrastorage.org/webt/gf/zf/3n/gfzf3ngekobjqrcvu5h4pveyv6m.png" />Большая часть скомпилированного файла состоит из служебных символов. Нас интересует только <strong>main</strong>.</p>
 <p>Теперь попробуем добавить в программу функцию, и сразу увидим, что в elf артефакте появился новый символ с ее названием:</p>
@@ -43,13 +42,11 @@ int main() {
   return static_cast&lt;int&gt;(average(a, b));
 }
 </code></pre>
-
 <p><img alt="" src="https://habrastorage.org/webt/ve/tm/vp/vetmvpbfoox4lsqypk6x9obrvmi.png" /></p><p>Далее попробуем вынести эту функцию в отдельную единицу трансляции. Для этого создадим рядом файл average.cpp с ней:</p>
 <pre><code>double average(int a, int b) {
  return  static_cast&lt;double&gt;(a + b) / 2.0;
 }
 </code></pre>
-
 <p>А в main.cpp уберем определение функции и оставим только объявление:</p>
 <pre><code>double average(int a, int b);
 
@@ -59,7 +56,6 @@ int b = 20;
 return  static_cast&lt;int&gt;(average(a, b));
 }
 </code></pre>
-
 <p>Теперь если собрать average.cpp как <span class="footnote_link" id="5" onclick='showFootnote("5")' footnote-title="Какой командой?" footnote-text="<p>g++ -c average.cpp</p>">объектный файл</span class="footnote_link" id="5" onclick='showFootnote("5")' footnote-title="Какой командой?" footnote-text="<p>g++ -c average.cpp</p>">, образуется объектный файл average.o, который содержит только этот символ:
 <img alt="" src="https://habrastorage.org/webt/dv/h9/d7/dvh9d7fqralg6ep3qmmf9nzvkui.png" /></p>
 <p>Наконец, мы можем <span class="footnote_link" id="6" onclick='showFootnote("6")' footnote-title="Какой командой?" footnote-text="<p>g++ main.cpp average.o</p>">собрать</span class="footnote_link" id="6" onclick='showFootnote("6")' footnote-title="Какой командой?" footnote-text="<p>g++ main.cpp average.o</p>"> его вместе с основным main-ом в исполняемый файл.</p>
@@ -84,16 +80,14 @@ add_executable(MAIN main.cpp)
 
 target_link_libraries(MAIN AVERAGE) 
 </code></pre>
-
 <p>В коде выше создается два таргета: <strong>AVERAGE</strong> - библиотека, содержащая функцию вычисления среднего значения и <strong>MAIN</strong> - собственно исполняемый файл, вызывающий эту функцию.</p>
 <p>Последняя строчка обозначает зависимость <strong>MAIN</strong>  от <strong>AVERAGE</strong>.</p>
 <p>Теперь чтобы скомпилировать проект достаточно запустить следующие команды:</p>
-<pre><code class="bash">mkdir build &amp;&amp; cd build 
+<pre><code class="language-bash">mkdir build &amp;&amp; cd build 
 cmake .. &amp;&amp; make 
 </code></pre>
-
 <p>Результат:</p>
-<pre><code class="txt">$ cmake .. &amp;&amp; make 
+<pre><code class="language-txt">$ cmake .. &amp;&amp; make 
 -- The C compiler identification is Clang 10.0.0 
 -- The CXX compiler identification is Clang 10.0.0 
 -- Check for working C compiler: /usr/bin/clang 
@@ -120,9 +114,10 @@ cmake .. &amp;&amp; make
 [100%] **Linking CXX executable MAIN** 
 [100%] Built target MAIN 
 </code></pre>
-
 <p>После выполнения сборки в папке build появляются соответствующие артефакты <strong>MAIN</strong> и <strong>libAVERAGE.a</strong>. 
- <p style='text-align: right;'> <em>Весь представленный в статье код можно найти в <a href="https://github.com/evgenstf/z_sort_sources/tree/main/cpp/cpp_linking">соответствующем репозитории</a>.</em> </p></p>
+ 
+<p style='text-align: right;'> *Весь представленный в статье код можно найти в [соответствующем репозитории](https://github.com/evgenstf/z_sort_sources/tree/main/cpp/cpp_linking).* </p>
+</p>
   </div>
 
   <div id="footnote_container"></div>

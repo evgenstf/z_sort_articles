@@ -10,6 +10,8 @@
 {
   "type": "graph",
   "content": {
+    "type": "dot",
+    "show_labels": true,
     "nodes_count": 5,
     "edges": [[0, 1], [2, 3], [0, 4]]
   }
