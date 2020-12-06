@@ -20,6 +20,7 @@
   "content": {
     "type": "circle",
     "nodes_count": 5,
+    "show_labels": true,
     "edges": [[0, 1], [0, 2], [1, 3], [1, 4], [1, 5], [2, 6], [2, 7]]
   }
 },
@@ -59,7 +60,7 @@
     "content": {
         "type": "line",
         "color": "#BF00B0",
-        "grid": "True",
+        "grid_flag": true,
         "x-axis": [
             0,
             1,
