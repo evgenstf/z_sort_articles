@@ -5,13 +5,152 @@
 },
 {
   "type": "markdown",
-  "content": "## Тут секция с markdown"
+  "content": "## Тут секция с markdown\n\n Markdown text"
+},
+{
+  "type": "markdown",
+  "content": "## Тут секция с графами"
+},
+{
+  "type": "markdown",
+  "content": "#### Circle Graph"
 },
 {
   "type": "graph",
   "content": {
+    "type": "circle",
     "nodes_count": 5,
-    "edges": [[0, 1], [2, 3], [0, 4]]
+    "show_labels": true,
+    "edges": [[0, 1], [0, 2], [1, 3], [1, 4], [1, 5], [2, 6], [2, 7]]
   }
+},
+{
+  "type": "markdown",
+  "content": "#### Dot Graph"
+},
+{
+  "type": "graph",
+  "content": {
+    "type": "dot",
+    "nodes_count": 7,
+    "edges": [[0, 1], [0, 2], [1, 3], [1, 4], [1, 5], [2, 6], [2, 7]]
+  }
+},
+{
+  "type": "markdown",
+  "content": "#### Twopi Graph"
+},
+{
+  "type": "graph",
+  "content": {
+    "type": "twopi",
+    "nodes_count": 7,
+    "edges": [[0, 1], [0, 2], [1, 3], [1, 4], [1, 5], [2, 6], [2, 7]]
+  }
+},
+{
+  "type": "markdown",
+  "content": "## Тут секция с чартами\n\n"
+},
+{
+  "type": "markdown",
+  "content": "#### Line Chart"
+},
+{"type": "chart",
+    "content": {
+        "type": "line",
+        "color": "#BF00B0",
+        "grid_flag": true,
+        "x-axis": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "y-axis": [
+            4,
+            5,
+            0,
+            3,
+            0,
+            1
+        ]
+    }
+},
+{
+  "type": "markdown",
+  "content": "#### Scatter Chart"
+},
+{"type": "chart",
+    "content": {
+        "type": "scatter",
+        "color": "#BF00B0",
+        "x-axis": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "y-axis": [
+            4,
+            5,
+            0,
+            3,
+            0,
+            1
+        ]
+    }
+},
+{
+  "type": "markdown",
+  "content": "#### Bar Chart"
+},
+{"type": "chart",
+    "content": {
+        "type": "bar",
+        "color": "#BF00B0",
+        "x-axis": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "y-axis": [
+            4,
+            5,
+            0,
+            3,
+            0,
+            1
+        ]
+    }
+},
+{
+  "type": "markdown",
+  "content": "#### Pie Chart"
+},
+{"type": "chart",
+    "content": {
+        "type": "pie",
+        "labels": [
+            "Python",
+            "C++",
+            "Java",
+            "Pascal"
+        ],
+        "ratio": [
+            30,
+            10,
+            5,
+            55
+        ]
+    }
 }
 ]
+
