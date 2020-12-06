@@ -61,7 +61,7 @@
     "content": {
         "type": "line",
         "color": "#BF00B0",
-        "grid_flag": true,
+        "show_grid": true,
         "x-axis": [
             0,
             1,
