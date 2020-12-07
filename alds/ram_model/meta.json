@@ -1,6 +1,6 @@
 {
   "type": "article",
-  "header": ["RAM-модель"],
+  "header": ["Word-RAM модель. Доказательство корректности работы алгоритмов."],
   "date": "1 Декабря 2020",
   "authors": ["Belloid"],
   "id": "ram_model"
