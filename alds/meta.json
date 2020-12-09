@@ -4,6 +4,7 @@
   "type": "category",
   "color": "#283593",
   "items": [
+    "sort_algorithms",
     "ram_model",
     "probability_theory"
   ]
