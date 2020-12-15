@@ -84,6 +84,34 @@
 },
 {
   "type": "markdown",
+  "content": "#### Smooth Line Chart"
+},
+{"type": "chart",
+    "content": {
+        "type": "line",
+        "color": "#1e4a76",
+        "line_smooth": true,
+        "show_grid": true,
+        "x-axis": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "y-axis": [
+            4,
+            5,
+            0,
+            3,
+            0,
+            1
+        ]
+    }
+},
+{
+  "type": "markdown",
   "content": "#### Scatter Chart"
 },
 {"type": "chart",
@@ -154,6 +182,36 @@
             55
         ]
     }
+},
+{
+    "type":"steps",
+    "content":[
+        {
+            "type":"markdown",
+            "content":"# First step of this amazing technology"
+        },
+        {
+          "type": "graph",
+          "content": {
+            "type": "twopi",
+            "node_color": "yellow",
+            "edge_color": "black",
+            "nodes_count": 9,
+            "edges": [[0, 1], [0, 2], [0, 7], [1, 3], [1, 4], [1, 5], [5, 7], [2, 6], [2, 7]]
+          }
+        },
+        {
+            "type":"markdown",
+            "content":"# Cool \n В эти сабсекции можно вставлять все то же самое, что и в обычные секции. Круто, да?!"
+        },
+        {
+            "type":"markdown",
+            "content": "<p>В ней много лишнего: от комментариев до сервисных функций, большая часть которых не используется. Ситуацию можно исправить добавлением флага <code>-O2</code>, в Emscripten компиляторе он включает также оптимизацию js кода.</a></p> <p>После этого js код выглядит более приятно:  <h2>Клиентский код</h2>"
+        },
+        {
+            "type":"markdown",
+            "content":"## The end"
+        }
+    ]
 }
 ]
-
