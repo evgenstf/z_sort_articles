@@ -4,6 +4,7 @@
   "color": "white",
   "header": "",
   "items": [
+    "in_editing",
     "alds",
     "demo",
     "cpp",

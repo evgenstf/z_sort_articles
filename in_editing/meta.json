@@ -1,0 +1,9 @@
+{
+  "id": "in_editing",
+  "header": ["Редактируемые статьи"],
+  "type": "category",
+  "color": "#FF9800",
+  "items": [
+    "editor_result"
+  ]
+}
