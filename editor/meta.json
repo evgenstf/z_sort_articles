@@ -3,5 +3,7 @@
   "header": ["Редактируемые статьи"],
   "type": "category",
   "color": "#3abc50",
-  "items": []
+  "items": [
+    "editor_result"
+  ]
 }
