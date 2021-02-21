@@ -1,4 +1,5 @@
 {
+  "id": 9,
   "type": "article",
   "header": [
     "new",
@@ -8,5 +9,5 @@
   "authors": [
     "mock_author"
   ],
-  "id": "editor_result"
+  "url": "editor_result_9"
 }

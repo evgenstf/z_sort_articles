@@ -1,8 +1,9 @@
 {
+  "id": 12,
   "type": "article",
   "header": ["Обрабатываем данные на стороне клиента с помощью WASM."],
   "date": "10 Октября 2020",
   "authors": ["evgenstf"],
-  "id": "wasm_data_processing",
+  "url": "wasm_data_processing_12",
   "reading_time": "12 минут"
 }

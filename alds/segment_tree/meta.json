@@ -1,8 +1,9 @@
 {
+  "id": 4,
   "type": "article",
   "header": ["Дерево Отрезков.", "Построение."],
   "date": "14 Сентября 2020",
   "authors": ["Монтгомери Преображенский"],
-  "id": "segment_tree",
+  "url": "segment_tree_4",
   "reading_time": "1 час 15 минут"
 }

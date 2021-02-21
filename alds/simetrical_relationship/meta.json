@@ -1,8 +1,9 @@
 {
+  "id": 5,
   "type": "article",
   "header": ["Симметричное отношение."],
   "date": "14 Сентября 2020",
   "authors": ["Монтгомери Преображенский"],
-  "id": "simetrical_relationship",
+  "url": "simetrical_relationship_5",
   "reading_time": "15 минут"
 }

@@ -1,7 +1,8 @@
 {
+  "id": 6,
   "type": "article",
   "header": ["Сортировки"],
   "date": "9 Декабря 2020",
   "authors": ["Belloid"],
-  "id": "sort_algorithms"
+  "url": "sort_algorithms_6"
 }

@@ -1,8 +1,9 @@
 {
+  "id": 2,
   "type": "article",
   "header": ["Случайные величины", "Математическое ожидание, дисперсия, линейность, индикаторные величины."],
   "date": "27 Ноября 2020",
   "authors": ["evgenstf", "Belloid"],
-  "id": "probability_theory",
+  "url": "probability_theory_2",
   "reading_time": "12 минут"
 }

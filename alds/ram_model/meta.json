@@ -1,7 +1,8 @@
 {
+  "id": 3,
   "type": "article",
   "header": ["Word-RAM модель. Доказательство корректности работы алгоритмов."],
   "date": "1 Декабря 2020",
   "authors": ["Belloid"],
-  "id": "ram_model"
+  "url": "ram_model_3"
 }

@@ -1,8 +1,9 @@
 {
+  "id": 0,
   "type": "article",
   "header": ["Определение булевой функции."],
   "date": "14 Сентября 2020",
   "authors": ["Монтгомери Преображенский"],
-  "id": "boolean_function",
+  "url": "boolean_function_0",
   "reading_time": "35 минут"
 }

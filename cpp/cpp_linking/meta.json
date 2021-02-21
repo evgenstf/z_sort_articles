@@ -1,8 +1,9 @@
 {
+  "id": 7,
   "type": "article",
   "header": ["Механизм линковки в C++"],
   "date": "19 Октября 2020",
   "authors": ["evgenstf"],
-  "id": "cpp_linking",
+  "url": "cpp_linking_7",
   "reading_time": "5 минут"
 }

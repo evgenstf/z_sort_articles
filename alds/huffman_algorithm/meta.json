@@ -1,8 +1,9 @@
 {
+  "id": 1,
   "type": "article",
   "header": ["Алгоритм Хаффмана."],
   "date": "14 Сентября 2020",
   "authors": ["Монтгомери Преображенский"],
-  "id": "huffman_algorithm",
+  "url": "huffman_algorithm_1",
   "reading_time": "1 час"
 }
