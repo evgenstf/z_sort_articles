@@ -1,5 +1,5 @@
 <div class="article">
-  <div class="article_header">Демонстрационная статья</div>
+  <div class="article_header">Z-sort sections editor</div>
 
   <div class="article_subheader"><tr>
     <table width=100% style="border-collapse:collapse"><tr>
@@ -13,16 +13,57 @@
       </td>
       <td nowrap="nowrap">
         <div class="article_reading_time">
-          3 min
+          8 min
         </div>
       </td>
     </tr></table>
   </div>
 
   <div class="article_body">
-    <p>Здесь показываем что умеет движок.</p><h2>Тут секция с markdown</h2>
-<p>Markdown text</p><h2>Тут секция с графами</h2><h4>Circle Graph</h4><h2>Тут секция с чартами</h2><h4>Line Chart</h4><img src="{% static "articles/demo/common_demo/chart_0.svg" %}" /><h4>Smooth Line Chart</h4><img src="{% static "articles/demo/common_demo/chart_1.svg" %}" /><h4>Scatter Chart</h4><img src="{% static "articles/demo/common_demo/chart_2.svg" %}" /><h4>Bar Chart</h4><img src="{% static "articles/demo/common_demo/chart_3.svg" %}" /><h4>Pie Chart</h4><img src="{% static "articles/demo/common_demo/chart_4.svg" %}" /><h1>Секция с шагами</h1>
-<p>Ниже приведен пример описания построения двоичной кучи:</p><div class="first-step"><div class="step_number">1</div><div class="step_content"><h1>Ициализация</h1><p>Начать стоит с того, что добавить в дерево первый элемент, он будет являться корнем и уже образует упорядоченную кучу сам по себе.</p><img src="{% static "articles/demo/common_demo/graph_0.svg" %}" /></div></div><div class="middle-step-colorized"><div class="step_number">2</div><div class="step_content"><h1>Добавление элемента</h1><p>Далее добавляем следующий элемент в первый незянятый слот в порядке BFS обхода.</p><img src="{% static "articles/demo/common_demo/graph_1.svg" %}" /></div></div><div class="middle-step"><div class="step_number">3</div><div class="step_content"><h1>Восстановление упорядоченности</h1><p>Чтобы восстановить упорядоченность кучи, <span class="footnote_link" id="5" onclick='showFootnote("5")' footnote-title="Каким образом?" footnote-text="<p>Меняем значениями с родителем</p>">поднимаем новый элемент наверх</span class="footnote_link" id="5" onclick='showFootnote("5")' footnote-title="Каким образом?" footnote-text="<p>Меняем значениями с родителем</p>">, пока он не станет меньше, чем все его предки.</p><img src="{% static "articles/demo/common_demo/graph_2.svg" %}" /></div></div><div class="last-step-colorized"><div class="step_number">4</div><h1></h1><div class="step_content"><p>Таким образом необходимо последовательно добавлять элементы и поднимать их наверх. В итоге получится упорядоченная куча с минимальным элементом в корнe.</p><img src="{% static "articles/demo/common_demo/graph_3.svg" %}" /></div></div>
+    <h2>Гайд по возможностьям движка z-sort для написания красивых и понятных технических статей</h2>
+<p>Сейчас у нас есть поддержка <em>4</em> видов секций </p>
+<ul>
+<li>
+<p>Markdown c поддержкой всех привычных функций $ \LaTeX $ </p>
+</li>
+<li>
+<p>Редактор графов</p>
+<ul>
+<li>
+<p>С вершинами в виде дерева</p>
+</li>
+<li>
+<p>С вершинами по кругу</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Редактор чартов</p>
+<ul>
+<li>
+<p>Line chart</p>
+</li>
+<li>
+<p>Smooth line chart</p>
+</li>
+<li>
+<p>Scatter chart</p>
+</li>
+<li>
+<p>Bar chart</p>
+</li>
+<li>
+<p>Pie chart</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Секция с шагами для наглядного описания алгоритмов</p>
+</li>
+</ul><h1>Секция с маркдауном и $ \LaTeX $</h1><h2>Сочетания в комбинаторике</h2><p>В комбинаторике <em>сочетанием</em> из $ n $ по $ k $ называется набор $ k $ элементов, выбранных из данного множества, содержащего $ n $ различных элементов. </p>
+<p>Наборы, отличающиеся только <strong>порядком</strong> следования элементов (но не составом), считаются <strong>одинаковыми</strong>, этим сочетания отличаются от <em>размещений</em>.</p>
+<p>Число сочетаний из  $ n $ по $ k $ равно <strong>биномиальному коэффициенту</strong> $$ \binom{n}{k} = \frac{n!}{k!(n-k)!} $$</p><h1>Секция с графами</h1><p>В обычном интерфейсе работа с графами реализована очень неудобно, а если там и получается что-то сделать, то все выходит не красиво и не кастомизированно. Эту проблему мы решили в нашем редакторе <strong>z-sort</strong></p><h3>Древовидный граф</h3><img src="{% static "articles/demo/common_demo/graph_0.svg" %}" /><h3>Граф с вершинами по кругу</h3><img src="{% static "articles/demo/common_demo/graph_1.svg" %}" /><h1>Секция с чартами</h1><p>Всегда бывает полезно увидеть представление в виде чарта, чтобы наглядно понять что да как. Поэтому мы реализовали сразу <em>пять</em> видов чартов, чтобы каждый нашел именно то, что ему надо.</p><p><strong>Line charts</strong> -- это привычные нам графики, которые можно как-угодно кастомизировать. Например, можно показывать сетку графика или нет, смягчить линии или оставить все так, как есть.</p><h3>Usuall line chart</h3><img src="{% static "articles/demo/common_demo/chart_0.svg" %}" /><h3>Smooth line chart</h3><img src="{% static "articles/demo/common_demo/chart_1.svg" %}" /><h3>Scatter Chart</h3><p><strong>Scatter chart</strong> может помочь очень наглядно представить распределение данных, если вы пишите статью о машинном обучении или ещё в множестве других ситуаций</p><img src="{% static "articles/demo/common_demo/chart_2.svg" %}" /><h3>Bar Chart</h3><p><strong>Bar chart</strong> вас всегда выручит в написании какого-то отчета. Например, с помощь него вы можете продемонстрировать размер выручки за каждый месяц</p><img src="{% static "articles/demo/common_demo/chart_3.svg" %}" /><h3>Pie Chart</h3><p>С помощью <strong>pie chart</strong> вы с легкостью сможете рассказать о популярности различных языков програмирования на текущий момент</p><img src="{% static "articles/demo/common_demo/chart_4.svg" %}" /><h1>Секция с шагами</h1><p>И теперь <strong>вишенка</strong> на торте -- секция с шагами! Внутри нее вы можете использовать все секции описанные выше. Это очень удобно, если вы рассказывате о каком-нибудь алгоритме и вам важно пояснить свои действия шаг за шагом.</p>
+<p>Например, вы хотите написать статью про построение двоичной кучи:</p><div class="first-step"><div class="step_number">1</div><div class="step_content"><h1>Ициализация</h1><p>Начать стоит с того, что добавить в дерево первый элемент, он будет являться корнем и уже образует упорядоченную кучу сам по себе.</p><img src="{% static "articles/demo/common_demo/graph_2.svg" %}" /></div></div><div class="middle-step-colorized"><div class="step_number">2</div><div class="step_content"><h1>Добавление элемента</h1><p>Далее добавляем следующий элемент в первый незянятый слот в порядке BFS обхода.</p><img src="{% static "articles/demo/common_demo/graph_3.svg" %}" /></div></div><div class="middle-step"><div class="step_number">3</div><div class="step_content"><h1>Восстановление упорядоченности</h1><p>Чтобы восстановить упорядоченность кучи, <span class="footnote_link" id="5" onclick='showFootnote("5")' footnote-title="Каким образом?" footnote-text="<p>Меняем значениями с родителем</p>">поднимаем новый элемент наверх</span class="footnote_link" id="5" onclick='showFootnote("5")' footnote-title="Каким образом?" footnote-text="<p>Меняем значениями с родителем</p>">, пока он не станет меньше, чем все его предки.</p><img src="{% static "articles/demo/common_demo/graph_4.svg" %}" /></div></div><div class="last-step-colorized"><div class="step_number">4</div><h1></h1><div class="step_content"><p>Таким образом необходимо последовательно добавлять элементы и поднимать их наверх. В итоге получится упорядоченная куча с минимальным элементом в корнe.</p><img src="{% static "articles/demo/common_demo/graph_5.svg" %}" /></div></div>
   </div>
 
   <div id="footnote_container"></div>
